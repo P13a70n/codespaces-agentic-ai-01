@@ -24,25 +24,65 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap');
     :root {
-        --ink: #18231e;
-        --muted: #637168;
-        --paper: #f5f6f0;
-        --green: #174b3a;
-        --lime: #d9ef8b;
+        --system-ink: #18231e;
+        --system-paper: #f5f6f0;
+        --system-surface: #e9eee3;
+        --system-green: #174b3a;
+        --ink: var(--text-color, var(--system-ink));
+        --paper: var(--background-color, var(--system-paper));
+        --muted: color-mix(in srgb, var(--ink) 65%, var(--paper));
+        --surface: var(--secondary-background-color, var(--system-surface));
+        --field: var(--background-color, var(--system-paper));
+        --border: color-mix(in srgb, var(--ink) 20%, var(--paper));
+        --green: var(--primary-color, var(--system-green));
         --coral: #e8795f;
     }
-    .stApp { background: var(--paper); color: var(--ink); }
-    [data-testid="stHeader"] { background: transparent; }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --system-ink: #f1f5f1;
+            --system-paper: #151b17;
+            --system-surface: #26332b;
+            --system-green: #24694e;
+        }
+    }
+    .stApp, [data-testid="stAppViewContainer"] {
+        background: var(--paper) !important;
+        color: var(--ink) !important;
+    }
+    [data-testid="stMain"], [data-testid="stBottom"], [data-testid="stBottom"] > div {
+        background: var(--paper) !important;
+    }
+    [data-testid="stHeader"] { background: transparent !important; color: var(--ink) !important; }
     .block-container { max-width: 880px; padding-top: 2.2rem; }
-    h1, h2, h3 { font-family: 'Newsreader', Georgia, serif !important; color: var(--ink); }
+    .stApp h1, .stApp h2, .stApp h3 { font-family: 'Newsreader', Georgia, serif !important; color: var(--ink) !important; }
+    .stApp p, .stApp label, .stApp [data-testid="stMarkdownContainer"],
+    .stApp [data-testid="stCaptionContainer"] { color: var(--ink) !important; }
     p, label, div, button, input { font-family: 'DM Sans', sans-serif; }
     .eyebrow { color: var(--green); font-size: .74rem; font-weight: 700; letter-spacing: .12em; }
-    .app-title { font-family: 'Newsreader', Georgia, serif; font-size: 2.55rem; line-height: 1.08; margin: .4rem 0 .5rem; }
+    .app-title { font-family: 'Newsreader', Georgia, serif; font-size: 2.55rem; line-height: 1.08; margin: .4rem 0 .5rem; color: var(--ink); }
     .app-subtitle { color: var(--muted); margin-bottom: 1.5rem; }
-    .demo-note { background: #e9eee3; border-left: 3px solid var(--coral); padding: .7rem .9rem; border-radius: 3px; color: #435148; font-size: .88rem; }
-    [data-testid="stChatMessage"] { border: 1px solid #e0e4dc; border-radius: 8px; background: rgba(255,255,255,.72); }
-    [data-testid="stChatInput"] { border-color: #bbc8bd; }
-    .stButton > button[kind="primary"] { background: var(--green); border-color: var(--green); }
+    .demo-note { background: var(--surface); border-left: 3px solid var(--coral); padding: .7rem .9rem; border-radius: 3px; color: var(--ink); font-size: .88rem; }
+    [data-testid="stChatMessage"] { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--ink); }
+    [data-testid="stChatInput"] { border: 1px solid var(--border) !important; background: var(--field) !important; }
+    [data-testid="stChatInput"] > div,
+    [data-testid="stChatInput"] [data-baseweb="textarea"],
+    [data-testid="stChatInput"] [data-testid="stChatInputTextArea"],
+    [data-testid="stChatInput"] textarea {
+        background-color: var(--field) !important;
+        color: var(--ink) !important;
+        -webkit-text-fill-color: var(--ink) !important;
+        caret-color: var(--ink) !important;
+    }
+    [data-testid="stChatInputTextArea"]::placeholder,
+    [data-testid="stChatInput"] textarea::placeholder { color: var(--muted) !important; opacity: 1; }
+    [data-testid="stHeader"] button, [data-testid="stToolbar"] button { color: var(--ink) !important; }
+    [data-testid="stHeader"] svg, [data-testid="stToolbar"] svg { fill: currentColor; stroke: currentColor; }
+    [data-testid="stChatInput"] [data-testid="stChatInputSubmitButton"] {
+        background: var(--green) !important;
+        color: #fff !important;
+    }
+    [data-testid="stChatInput"] [data-testid="stChatInputSubmitButton"] svg { fill: currentColor; stroke: currentColor; }
+    .stButton > button[kind="primary"] { background: var(--green) !important; border-color: var(--green) !important; color: #fff !important; }
     .stButton > button { border-radius: 5px; }
     </style>
     """,
